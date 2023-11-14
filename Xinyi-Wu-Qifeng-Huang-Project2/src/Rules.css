@@ -1,0 +1,32 @@
+/* Add your styling to Rules.css */
+
+.rules-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #4caf50;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  ol {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  li {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  /* Add more styles for additional enhancements */
+  

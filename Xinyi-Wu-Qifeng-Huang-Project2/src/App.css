@@ -1,10 +1,90 @@
-.box {
-  height: 100px;
-  width: 100px;
-  border: 2px solid black;
+/* Add your styling to Game.css */
 
+.game-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.boxBlackBackground{
-  background-color: black;
+h2 {
+  color: #4caf50;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.word-display span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 50%;
+  margin: 0 5px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 16px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.feedback {
+  margin: 20px 0;
+  font-size: 18px;
+  color: #e74c3c;
+}
+
+.reset-button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #2980b9;
 }

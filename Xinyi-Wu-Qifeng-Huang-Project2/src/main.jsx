@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { Link, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Home from './Home.jsx'
 import Rules from './rules.jsx'
-import Game from './game.jsx'
-import CountProvider from './CountProvider.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,16 +16,13 @@ const router = createBrowserRouter([
     element:<Rules />
   },
   {
-    path: '/game',
-    element:<Game />
+    path: '/home',
+    element:<Home />
   },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <CountProvider>
       <RouterProvider router={router} />
-      {/* <App />same as calling App() */}
-    </CountProvider>
   </React.StrictMode>,
 )

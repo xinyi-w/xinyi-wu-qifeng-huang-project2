@@ -1,90 +1,104 @@
-import { useContext, useEffect, useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import CountText from './CounterText';
-import './App.css'
-import { CountContext } from './CountProvider';
-import Header from './Header';
+import { useState, useEffect } from "react";
+import Header from "./Header";
+import "./App.css";
 
-export default function App(){
+const INITIAL_ATTEMPTS = 6;
 
-  const [blackedOutState, setBlackedOutState] = useState(false);
-  // const [countState, setCountState] = useState(0);
-  const [countState, setCountState] = useContext(CountContext) //use context
+export default function Game() {
+  const [word, setWord] = useState("");
+  const [attempts, setAttempts] = useState(INITIAL_ATTEMPTS);
+  const [userInput, setUserInput] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [guessedWord, setGuessedWord] = useState(Array(word.length).fill(""));
 
+  useEffect(() => {
+    setWord(getRandomWord());
+    setAttempts(INITIAL_ATTEMPTS);
+    setUserInput("");
+    setFeedback("");
+    setGuessedWord(Array(word.length).fill(""));
+  }, []);
 
-  // let isBlackedOut = false;
-
-
-
-  function reverseIsBlackedOut(){
-    setBlackedOutState(!blackedOutState);
-    // -result in App() getting rerun
-    // isBlackedOut = !isBlackedOut;
-    // console.log(isBlackedOut) //debug
-    setCountState(countState + 1);
+  function getRandomWord() {
+    const words = ["example", "another", "wordle", "react", "javascript"];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
   }
 
-  function reset(){
-    setCountState(0);
-  }
+  const handleInputChange = (event) => {
+    setUserInput(event.target.value.toLowerCase().slice(0, word.length));
+  };
 
-  useEffect(function() {
-    // console.log("I have been rerendered")
-    if(countState%10 === 0) console.log("Count state is divisible by 10")
-  }, [countState]);
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    checkGuess();
+  };
 
-  let boxClassName = ''
-  if (blackedOutState) {
-    boxClassName = 'box boxBlackBackground';
-  } else {
-    boxClassName = 'box';
-  }
+  const checkGuess = () => {
+    const newGuessedWord = [...guessedWord];
+    let correctPositions = 0;
 
-  return(
+    for (let i = 0; i < word.length; i++) {
+      if (userInput[i] === word[i]) {
+        correctPositions++;
+        newGuessedWord[i] = userInput[i];
+      }
+    }
+
+    const isCorrect = correctPositions === word.length;
+
+    if (isCorrect) {
+      setFeedback("Congratulations! You guessed the word!");
+      setGuessedWord(word.split(""));
+    } else {
+      setAttempts((prevAttempts) => prevAttempts - 1);
+      setFeedback(
+        `Incorrect! ${attempts - 1} attempts remaining. Try again!`
+      );
+    }
+
+    if (attempts === 1 && !isCorrect) {
+      setFeedback(`Sorry, you've run out of attempts. The correct word was "${word}". Try again!`);
+      setGuessedWord(word.split(""));
+    }
+  };
+
+  const resetGame = () => {
+    setWord(getRandomWord());
+    setAttempts(INITIAL_ATTEMPTS);
+    setUserInput("");
+    setFeedback("");
+    setGuessedWord(Array(word.length).fill(""));
+  };
+
+  return (
     <div>
       <Header />
-      <CountText color = 'red' nickname = 'Bobby' countAmount ={countState} >
-        <botton onClick ={() => reset()}>Click to reset</botton>
-      </CountText>
-      {/* <div>This box has been clicked: {countState} times.</div> */}
-      <div className={boxClassName} onClick={() => reverseIsBlackedOut()}>
+      <div className="game-container">
+        <h2>Wordle Game</h2>
+        <p>{`Attempts remaining: ${attempts}`}</p>
+        <div className="word-display">
+          {guessedWord.map((letter, index) => (
+            <span key={index}>{letter}</span>
+          ))}
+        </div>
+        <form onSubmit={handleFormSubmit}>
+          <label>
+            Enter a {word.length}-letter word:
+            <input
+              type="text"
+              value={userInput}
+              onChange={handleInputChange}
+              maxLength={word.length}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+        <p className="feedback">{feedback}</p>
+        <button className="reset-button" onClick={resetGame}>
+          Try Again
+        </button>
       </div>
     </div>
-  )
-
+  );
 }
-
-
-
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vitejs.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App
