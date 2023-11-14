@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { GameContext } from "../Game";
+import { AppContext } from "../App";
 
-function GameOver() {
+export default function GameOver() {
   const {
     board,
     setBoard,
@@ -10,7 +10,7 @@ function GameOver() {
     onSelectLetter,
     correctWord,
     onDelete,
-  } = useContext(GameContext);
+  } = useContext(AppContext);
   return (
     <div className="gameOver">
       <h3>
@@ -25,5 +25,3 @@ function GameOver() {
     </div>
   );
 }
-
-export default GameOver;

@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import Home from './Home.jsx'
 import './index.css'
 import { Link, RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Game from './Game.jsx'
+import App from './App.jsx'
 import Rules from './rules.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <Home />
   },
   {
     path: '/rules',
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/game',
-    element:<Game />
+    element:<App />
   },
 ])
 

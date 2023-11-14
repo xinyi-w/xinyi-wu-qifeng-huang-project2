@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { GameContext } from "../Game";
+import { AppContext } from "../App";
 
-function Key({ keyVal, bigKey, disabled }) {
+export default function Key({ keyVal, bigKey, disabled }) {
   const { gameOver, onSelectLetter, onDelete, onEnter } =
-    useContext(GameContext);
+    useContext(AppContext);
 
   const selectLetter = () => {
     if (gameOver.gameOver) return;
@@ -25,5 +25,3 @@ function Key({ keyVal, bigKey, disabled }) {
     </div>
   );
 }
-
-export default Key;

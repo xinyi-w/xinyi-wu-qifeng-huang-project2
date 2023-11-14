@@ -1,5 +1,5 @@
 import Header from "./Header";
-import "./Rules.css";
+import './index.css';
 
 export default function Rules() {
   return (

@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { GameContext } from "../Game";
+import { AppContext } from "../App";
 
-function Letter({ letterPos, attemptVal }) {
+export default function Letter({ letterPos, attemptVal }) {
   const { board, setDisabledLetters, currAttempt, correctWord } =
-    useContext(GameContext);
+    useContext(AppContext);
   const letter = board[attemptVal][letterPos];
   const correct = correctWord.toUpperCase()[letterPos] === letter;
   const almost =
@@ -24,5 +24,3 @@ function Letter({ letterPos, attemptVal }) {
     </div>
   );
 }
-
-export default Letter;
