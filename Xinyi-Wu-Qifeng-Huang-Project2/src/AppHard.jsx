@@ -1,14 +1,14 @@
 import "./App.css";
-import Board from "./Components/Board";
-import Keyboard from "./Components/KeyBoard";
-import { boardDefault, generateWordSet } from "./Components/Words";
+import BoardHard from "./ComponentsHard/BoardHard";
+import Keyboard from "./ComponentsHard/KeyBoard";
+import { boardDefault, generateWordSet } from "./ComponentsHard/WordsHard";
 import { useState, createContext, useEffect } from "react";
-import GameOver from "./Components/GameOver";
+import GameOver from "./ComponentsHard/GameOver";
 import Header from "./Header";
 
-export const AppContext = createContext();
+export const AppHardContext = createContext();
 
-export default function App() {
+export default function AppHard() {
   const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0, letter: 0 });
   const [wordSet, setWordSet] = useState(new Set());
@@ -28,10 +28,10 @@ export default function App() {
 
   const onEnter = () => {
     console.log("onEnter called");
-    if (currAttempt.letter !== 6) return;
+    if (currAttempt.letter !== 7) return;
 
     let currWord = "";
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       currWord += board[currAttempt.attempt][i];
     }
     if (wordSet.has(currWord.toLowerCase())) {
@@ -43,7 +43,7 @@ export default function App() {
           gameOver: true,
           guessedWord: true,
         });
-      } else if (currAttempt.attempt === 5) {
+      } else if (currAttempt.attempt === 4) {
         // No more attempts left, update the gameOver state
         setGameOver({
           gameOver: true,
@@ -64,7 +64,7 @@ export default function App() {
   };
 
   const onSelectLetter = (key) => {
-    if (currAttempt.letter > 5) return;
+    if (currAttempt.letter > 6) return;
     const newBoard = [...board];
     newBoard[currAttempt.attempt][currAttempt.letter] = key;
     setBoard(newBoard);
@@ -79,7 +79,7 @@ export default function App() {
       <Header />
       <div className="App">
         <h1>Wordle</h1>
-        <AppContext.Provider
+        <AppHardContext.Provider
           value={{
             board,
             setBoard,
@@ -95,15 +95,15 @@ export default function App() {
           }}
         >
           <div className="game">
-            <Board />
+            <BoardHard />
             <div className="difficulty-buttons">
-              <button onClick={() => window.location.href = '/game/normal'}>
+              <button onClick={() => window.location.href = '/game/hard'}>
                 Reset
               </button>
             </div>
             {gameOver.gameOver ? <GameOver /> : <Keyboard />}
           </div>
-        </AppContext.Provider>
+        </AppHardContext.Provider>
       </div>
     </div>
   );
