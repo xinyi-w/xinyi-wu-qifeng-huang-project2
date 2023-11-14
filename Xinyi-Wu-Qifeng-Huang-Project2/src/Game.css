@@ -52,3 +52,15 @@ input, button {
     width: 90%;
   }
 }
+
+.correct {
+  background-color: #4caf50; /* Green */
+}
+
+.incorrect {
+  background-color: #888; /* Gray */
+}
+
+.misplaced {
+  background-color: #ffeb3b; /* Yellow */
+}

@@ -3,7 +3,7 @@ import Header from './Header';
 import "./Game.css"
 
 const wordleWords = {
-  normal: ['rocket', 'guitar', 'flower', 'puzzle', 'castle', 'planet', 'breeze', 'cookie', 'wonder', 'google'],
+  normal: ['rocket', 'guitar', 'flower', 'puzzle', 'castle', 'planet', 'breeze', 'cookie', 'wonder', 'piano'],
   hard: ['mystery', 'dolphin', 'champion', 'fantasy', 'whisper', 'silence', 'elephant', 'calendar', 'passion', 'journey'],
 };
 
@@ -13,7 +13,7 @@ const getRandomWord = (difficulty) => {
   return words[randomIndex].toUpperCase();
 };
 
-export default function Game() {
+export default function Game (){
   const [difficulty, setDifficulty] = useState('normal');
   const [targetWord, setTargetWord] = useState('');
   const [userInput, setUserInput] = useState('');
@@ -28,8 +28,6 @@ export default function Game() {
 
   const handleInputChange = (e) => {
     setUserInput(e.target.value.toUpperCase());
-   
-    console.log('User Input:', newUserInput);
   };
 
   const handleGuess = () => {
@@ -37,8 +35,6 @@ export default function Game() {
       setFeedback('Word length does not match.');
       return;
     }
-
-   
 
     setAttempts(attempts - 1);
 
@@ -63,25 +59,19 @@ export default function Game() {
     <div>
       <Header />
       <div className="game-container">
-        <h1>Wordle Game</h1>
-        <div>
-          <button onClick={() => setDifficulty('normal')}>Normal</button>
-          <button onClick={() => setDifficulty('hard')}>Hard</button>
+          <h1>Wordle Game</h1>
+          <div>
+            <button onClick={() => setDifficulty('normal')}>Normal</button>
+            <button onClick={() => setDifficulty('hard')}>Hard</button>
+          </div>
+          <div>
+            <p>Guess the {targetWord.length}-letter word!</p>
+            <p>Attempts remaining: {attempts}</p>
+            <input type="text" value={userInput} onChange={handleInputChange} />
+            <button onClick={handleGuess}>Guess</button>
+            <p>{feedback}</p>
+          </div>
         </div>
-        <div>
-          <p>Guess the {targetWord.length}-letter word!</p>
-          <p>Attempts remaining: {attempts}</p>
-          <input type="text" value={userInput} onChange={handleInputChange} />
-          <button onClick={handleGuess}>Guess</button>
-          <p>
-            {feedback.split('').map((char, index) => (
-              <span key={index} className={char === 'G' ? 'correct' : char === 'Y' ? 'misplaced' : 'incorrect'}>
-                {userInput[index]}
-              </span>
-            ))}
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
