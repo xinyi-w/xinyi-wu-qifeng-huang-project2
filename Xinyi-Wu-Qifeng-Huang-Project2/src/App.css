@@ -64,6 +64,12 @@ h1{
   background-color: grey;
 }
 
+.error-message {
+  color: red; /* Change text color to red */
+  font-size: 20px; /* Change font size */
+  /* Add more styles as needed */
+}
+
 .keyboard {
   width: 700px;
   height: 300px;

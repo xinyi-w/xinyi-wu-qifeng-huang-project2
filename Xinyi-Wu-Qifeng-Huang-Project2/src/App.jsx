@@ -13,6 +13,7 @@ export default function App() {
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0, letter: 0 });
   const [wordSet, setWordSet] = useState(new Set());
   const [correctWord, setCorrectWord] = useState("");
+  const [error, setError] = useState(null);
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [gameOver, setGameOver] = useState({
     gameOver: false,
@@ -28,8 +29,10 @@ export default function App() {
 
   const onEnter = () => {
     console.log("onEnter called");
-    if (currAttempt.letter !== 6) return;
-
+    if (currAttempt.letter !== 6) {
+      setError("Word too short!");
+      return;
+    }
     let currWord = "";
     for (let i = 0; i < 6; i++) {
       currWord += board[currAttempt.attempt][i];
@@ -51,7 +54,7 @@ export default function App() {
         });
       }
     } else {
-      alert("Word not found");
+      setError("Word not found!");
     }
   };
 
@@ -61,6 +64,7 @@ export default function App() {
     newBoard[currAttempt.attempt][currAttempt.letter - 1] = "";
     setBoard(newBoard);
     setCurrAttempt({ ...currAttempt, letter: currAttempt.letter - 1 });
+    setError(null);
   };
 
   const onSelectLetter = (key) => {
@@ -72,6 +76,7 @@ export default function App() {
       attempt: currAttempt.attempt,
       letter: currAttempt.letter + 1,
     });
+    setError(null);
   };
 
   return (
@@ -95,6 +100,7 @@ export default function App() {
           }}
         >
           <div className="game">
+            {error && <div className="error-message">{error}</div>}
             <Board />
             <div className="difficulty-buttons">
               <button onClick={() => window.location.href = '/game/normal'}>
