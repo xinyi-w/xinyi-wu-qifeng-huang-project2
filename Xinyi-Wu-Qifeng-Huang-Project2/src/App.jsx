@@ -27,6 +27,7 @@ export default function App() {
   }, []);
 
   const onEnter = () => {
+    console.log("onEnter called");
     if (currAttempt.letter !== 6) return;
 
     let currWord = "";
@@ -35,17 +36,22 @@ export default function App() {
     }
     if (wordSet.has(currWord.toLowerCase())) {
       setCurrAttempt({ attempt: currAttempt.attempt + 1, letter: 0 });
+  
+      if (currWord.toLowerCase() === correctWord.toLowerCase()) {
+        // Words match, update the gameOver state
+        setGameOver({
+          gameOver: true,
+          guessedWord: true,
+        });
+      } else if (currAttempt.attempt === 5) {
+        // No more attempts left, update the gameOver state
+        setGameOver({
+          gameOver: true,
+          guessedWord: false,
+        });
+      }
     } else {
       alert("Word not found");
-    }
-
-    if (currWord === correctWord) {
-      setGameOver({ gameOver: true, guessedWord: true });
-      return;
-    }
-    if (currAttempt.attempt === 6) {
-      setGameOver({ gameOver: true, guessedWord: false });
-      return;
     }
   };
 
