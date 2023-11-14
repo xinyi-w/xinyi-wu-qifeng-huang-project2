@@ -1,5 +1,3 @@
-/* Add your styling to Game.css */
-
 .game-container {
   max-width: 600px;
   margin: 20px auto;
@@ -7,84 +5,50 @@
   background-color: #f4f4f4;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
-h2 {
-  color: #4caf50;
-}
-
-p {
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-.word-display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.word-display span {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  background-color: #ddd;
-  border-radius: 50%;
-  margin: 0 5px;
-  text-align: center;
-  line-height: 30px;
-  font-size: 16px;
-}
-
-form {
-  margin-top: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-input {
-  width: 200px;
-  padding: 8px;
-  font-size: 16px;
+h1 {
+  color: #333;
 }
 
 button {
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
   background-color: #4caf50;
-  color: white;
+  color: #fff;
   border: none;
-  margin-top: 10px;
-  transition: background-color 0.3s;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-.feedback {
-  margin: 20px 0;
+p {
+  color: #555;
   font-size: 18px;
-  color: #e74c3c;
+  margin: 10px 0;
 }
 
-.reset-button {
+input {
   padding: 10px;
   font-size: 16px;
-  cursor: pointer;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  margin-top: 10px;
-  transition: background-color 0.3s;
 }
 
-.reset-button:hover {
-  background-color: #2980b9;
+input, button {
+  margin-top: 10px;
+}
+
+.feedback {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+  }
 }

@@ -1,104 +1,77 @@
-import { useState, useEffect } from "react";
-import Header from "./Header";
-import "./Game.css";
+import { useState, useEffect } from 'react';
+import Header from './Header';
+import "./Game.css"
 
-const INITIAL_ATTEMPTS = 6;
+const wordleWords = {
+  normal: ['rocket', 'guitar', 'flower', 'puzzle', 'castle', 'planet', 'breeze', 'cookie', 'wonder', 'piano'],
+  hard: ['mystery', 'dolphin', 'champion', 'fantasy', 'whisper', 'silence', 'elephant', 'calendar', 'passion', 'journey'],
+};
 
-export default function Game() {
-  const [word, setWord] = useState("");
-  const [attempts, setAttempts] = useState(INITIAL_ATTEMPTS);
-  const [userInput, setUserInput] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const [guessedWord, setGuessedWord] = useState(Array(word.length).fill(""));
+const getRandomWord = (difficulty) => {
+  const words = wordleWords[difficulty];
+  const randomIndex = Math.floor(Math.random() * words.length);
+  return words[randomIndex].toUpperCase();
+};
+
+export default function Game (){
+  const [difficulty, setDifficulty] = useState('normal');
+  const [targetWord, setTargetWord] = useState('');
+  const [userInput, setUserInput] = useState('');
+  const [attempts, setAttempts] = useState(0);
+  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
-    setWord(getRandomWord());
-    setAttempts(INITIAL_ATTEMPTS);
-    setUserInput("");
-    setFeedback("");
-    setGuessedWord(Array(word.length).fill(""));
-  }, []);
+    setTargetWord(getRandomWord(difficulty));
+    setAttempts(difficulty === 'normal' ? 6 : 5);
+    setFeedback('');
+  }, [difficulty]);
 
-  function getRandomWord() {
-    const words = ["example", "another", "wordle", "react", "javascript"];
-    const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
-  }
-
-  const handleInputChange = (event) => {
-    setUserInput(event.target.value.toLowerCase().slice(0, word.length));
+  const handleInputChange = (e) => {
+    setUserInput(e.target.value.toUpperCase());
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    checkGuess();
-  };
-
-  const checkGuess = () => {
-    const newGuessedWord = [...guessedWord];
-    let correctPositions = 0;
-
-    for (let i = 0; i < word.length; i++) {
-      if (userInput[i] === word[i]) {
-        correctPositions++;
-        newGuessedWord[i] = userInput[i];
-      }
+  const handleGuess = () => {
+    if (userInput.length !== targetWord.length) {
+      setFeedback('Word length does not match.');
+      return;
     }
 
-    const isCorrect = correctPositions === word.length;
+    setAttempts(attempts - 1);
 
-    if (isCorrect) {
-      setFeedback("Congratulations! You guessed the word!");
-      setGuessedWord(word.split(""));
+    if (userInput === targetWord) {
+      setFeedback('Congratulations! Would you like to try again?');
     } else {
-      setAttempts((prevAttempts) => prevAttempts - 1);
-      setFeedback(
-        `Incorrect! ${attempts - 1} attempts remaining. Try again!`
-      );
+      let feedbackString = '';
+      for (let i = 0; i < targetWord.length; i++) {
+        if (userInput[i] === targetWord[i]) {
+          feedbackString += 'G';
+        } else if (targetWord.includes(userInput[i])) {
+          feedbackString += 'Y';
+        } else {
+          feedbackString += 'R';
+        }
+      }
+      setFeedback(feedbackString);
     }
-
-    if (attempts === 1 && !isCorrect) {
-      setFeedback(`Sorry, you've run out of attempts. The correct word was "${word}". Try again!`);
-      setGuessedWord(word.split(""));
-    }
-  };
-
-  const resetGame = () => {
-    setWord(getRandomWord());
-    setAttempts(INITIAL_ATTEMPTS);
-    setUserInput("");
-    setFeedback("");
-    setGuessedWord(Array(word.length).fill(""));
   };
 
   return (
     <div>
       <Header />
       <div className="game-container">
-        <h2>Wordle Game</h2>
-        <p>{`Attempts remaining: ${attempts}`}</p>
-        <div className="word-display">
-          {guessedWord.map((letter, index) => (
-            <span key={index}>{letter}</span>
-          ))}
+          <h1>Wordle Game</h1>
+          <div>
+            <button onClick={() => setDifficulty('normal')}>Normal</button>
+            <button onClick={() => setDifficulty('hard')}>Hard</button>
+          </div>
+          <div>
+            <p>Guess the {targetWord.length}-letter word!</p>
+            <p>Attempts remaining: {attempts}</p>
+            <input type="text" value={userInput} onChange={handleInputChange} />
+            <button onClick={handleGuess}>Guess</button>
+            <p>{feedback}</p>
+          </div>
         </div>
-        <form onSubmit={handleFormSubmit}>
-          <label>
-            Enter a {word.length}-letter word:
-            <input
-              type="text"
-              value={userInput}
-              onChange={handleInputChange}
-              maxLength={word.length}
-            />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-        <p className="feedback">{feedback}</p>
-        <button className="reset-button" onClick={resetGame}>
-          Try Again
-        </button>
-      </div>
     </div>
   );
 }
